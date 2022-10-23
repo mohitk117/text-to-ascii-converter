@@ -1,0 +1,139 @@
+<html>
+<head>
+<style>
+
+body { background: #555; color: #fff;}
+
+.string_output {
+	background: #555; 
+    border: 1px solid #11B1EC; 
+    border-radius: 5px; 
+    box-shadow: 0 0 5px 3px #11B1EC; 
+    color: #fff; 
+    outline: none; 
+	transition: 500ms all ease;
+    width: 400px
+}
+
+#string_input {
+	background: #555; 
+    border: 1px solid #11B1EC; 
+    border-radius: 5px; 
+    box-shadow: 0 0 5px 3px #11B1EC; 
+    color: #fff; 
+    outline: none; 
+	transition: 500ms all ease;
+    height:23px; 
+    width: 275px; 
+}
+
+#string_input:hover{
+width: 400px;
+}
+
+
+#pagewrap {
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+
+
+</style>
+</head>
+<body>
+<div id="pagewrap">
+
+<div class="status"></div>
+
+<center>
+<select id="conversion">
+  <option value="to_ascii">To ASCII</option>
+  <option value="to_text">To TEXT</option>
+</select>
+</center>
+<br><br><br>
+<div class="string_input_div"><h1>Text to Ascii Converter</h1><h3>Enter String For conversion</h3><input type="text" name="string_input" id="string_input"></div>
+<br>
+<div class="string_output"></div>
+<br>
+<div class="string_verification"></div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+	$(document).ready( function() { 
+	
+	//$('.status').html('<h2>Greetings!!! </h2> &#' + [77, 111, 111, 100, 32, 85, 112, 100, 97, 116, 101, 58, 32, 73, 39, 109, 32, 66, 111, 114, 101, 100, 33, 33].join(';&#') + ';');
+	
+	$('input#string_input').on('input', function() {
+	var option = $('select#conversion').val();
+	var str = $('input#string_input').val();	
+	if(option=='to_ascii'){
+		
+		toAscii(str);
+		
+	}
+	else if(option=='to_text'){
+		
+		toText(str);
+		
+	}
+	
+	//___________________________________________________________
+	function toAscii(str){
+	var str_arr = str.split("");
+	var i, ch1 = [], ch_ascii = [];
+			
+	for(i=0;i<str_arr.length;i++){
+		ch1.push(str.charCodeAt(i));
+		}
+ 
+	$('.string_output').text(ch1.join(', '));
+	
+	var string_verif = $('.string_output').text();
+	ch_ascii = string_verif.split(', ');
+	//console.log(ch_ascii);
+	$('.string_verification').html('Code Verification:  <br> &#' + ch_ascii.join(';&#') + ';');
+	
+	if(str=='')
+	$('.string_verification').html('');
+		
+	}
+	//______________________________________________________
+	function toText(str){
+	var	ch_ascii = str.split(', ');
+	$('.string_output').html('&#' + ch_ascii.join(';&#') + ';');
+	if(str=='') 	$('.string_output').html('');
+	
+	var string_verif = $('.string_output').text();
+	var str_arr = string_verif.split("");
+	var i, ch2 = [];
+			
+	for(i=0;i<str_arr.length;i++){
+		ch2.push(str.charCodeAt(i));
+		}
+ 
+	$('.string_verification').text(ch_ascii.join(', '));	
+	
+		
+	}
+
+	});
+	
+	$('select#conversion').on('change', function() { $( "input#string_input" ).trigger( "input" ); });
+	
+});
+ </script>
+
+ 
+</body>
+</html>
